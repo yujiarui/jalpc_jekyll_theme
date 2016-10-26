@@ -270,3 +270,6 @@ There may be merge conflicts, so be sure to fix the files that git lists if they
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+
+### PS:此博文为模板原作者所写。里面详细地介绍了jekyll模板的构建。希望能对大家有用。
