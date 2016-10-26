@@ -2,13 +2,13 @@
     detail: Blogstart
     i18n: Blogstart
   desc:
-    detail: Welcome!My english skill is not good.HaHa.哈哈
+    detail: 欢迎！英语表达能力不足。原谅我在此用中文哈哈哈哈哈哈！
     i18n: Blogstart_des
   date:
     detail: Apr. 2016
     i18n: Blogstart_date
   job:
-    detail: HNU's student
+    detail: 湖大信安1班的学生
     i18n: Blogstart_job
   icon: fa-plus-square
 
