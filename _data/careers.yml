@@ -1,15 +1,15 @@
 - name:
-    detail: Blog_start
-    i18n: nextcode
+    detail: Blogstart
+    i18n: Blogstart
   desc:
-    detail: 初进大学。英语表达能力不强。所以就用中文啦。刚自己弄的博客。welcome！
-    i18n: nextcode_des
+    detail: Welcome!My english skill is not good.HaHa.哈哈
+    i18n: Blogstart_des
   date:
     detail: Apr. 2016
-    i18n: nextcode_date
+    i18n: Blogstart_date
   job:
-    detail: 湖大信安1班学生
-    i18n: nextcode_job
+    detail: HNU's student
+    i18n: Blogstart_job
   icon: fa-plus-square
 
 #- name:
