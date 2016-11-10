@@ -66,7 +66,7 @@ OK！出来了。太棒了。开始真正搞事情了。、
 
 `COLUMNS`表：提供了表中的列信息，（当然也有数据库名和表名称这两列）详细表述了某张表的所有列以及每个列的信息，包括该列是那个表中的第几列，列的数据类型，列的编码类型，列的权限，猎德注释等。是`show columns from schemaname.tablename`的结果取之此表。）
 
-摘自http://blog.csdn.net/u012763794/article/details/51207833
+摘自[这里](http://blog.csdn.net/u012763794/article/details/51207833)
 
 介绍完就开干。
 
