@@ -22,19 +22,11 @@ icon: fa-bookmark-o
 
 1. ### `select rand()`          	  		    0~1 之间的随机值
 
-----------
-
 2. ### `select rang()*2` 	     	  	 	    0~2 之间的随机值
-	
-----------
 
 3. ### `select floor(rand()*2)`     		    0 1 两个整数随机出现
- 
-----------
 
 4. ### `select database()` 	        	    当前数据库
- 
-----------
 
 5. ### `select concat((select database()),0x20,floor(rand()   *2))a` 	                       			{当前数据库}{空格}{0 1中的一个}
 
